@@ -9,11 +9,21 @@
     tools:context="com.example.wangzeqiu.mytimeview.MainActivity">
 
 
-
-    <com.example.wangzeqiu.mytimeview.MyVerticalMarqueeView
-        android:id="@+id/myViews"
+    <Button
+        android:id="@+id/button"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="100dp"
-        android:background="@color/colorAccent"/>
+        android:layout_height="wrap_content"
+        android:text="钟表"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="垂直跑马灯"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="雷达"/>
 </LinearLayout>

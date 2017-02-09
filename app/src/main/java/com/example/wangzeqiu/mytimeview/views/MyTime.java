@@ -1,4 +1,4 @@
-package com.example.wangzeqiu.mytimeview;
+package com.example.wangzeqiu.mytimeview.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -154,5 +154,10 @@ public class MyTime extends View {
      */
     public void start() {
         mTimer.schedule(task, 0, 10);
+    }
+
+    public void stop() {
+        mTimer.cancel();
+        task.cancel();
     }
 }

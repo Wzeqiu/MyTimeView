@@ -1,4 +1,4 @@
-package com.example.wangzeqiu.mytimeview;
+package com.example.wangzeqiu.mytimeview.views;
 
 import android.animation.Animator;
 import android.animation.PropertyValuesHolder;
@@ -87,14 +87,14 @@ public class MyVerticalMarqueeView extends View implements View.OnClickListener 
         width = MeasureSpec.getSize(widthMeasureSpec) - getPaddingLeft() - getPaddingRight();
         height = MeasureSpec.getSize(heightMeasureSpec) - getPaddingTop() - getPaddingBottom();
 
-        centerX = width / 2;
-        centerY = height / 2;
+        centerX = width >> 1;
+        centerY = height >> 1;
 
-        PaintText paintText = new PaintText(mPaint, mList.get(0), centerY, 0).setAlpha(255);
+        PaintText paintText = new PaintText(mPaint, mList.get(0), centerY, 0);
         paintText.reset();
         mPaintTexts.add(paintText);
         if (mList.size() > 1) {         //超出View可见范围
-            PaintText paintText1 = new PaintText(mPaint, mList.get(1), centerY + height, 1).setAlpha(255);
+            PaintText paintText1 = new PaintText(mPaint, mList.get(1), centerY + height, 1);
             paintText1.reset();
             mPaintTexts.add(paintText1);
         }
@@ -230,7 +230,7 @@ public class MyVerticalMarqueeView extends View implements View.OnClickListener 
         private int drawX;
         private int drawY;
         private int position;
-        private int alpha;
+        private int alpha = 255;
 
 
         public PaintText(Paint paint, String text, int centerY, int positon) {
@@ -267,9 +267,9 @@ public class MyVerticalMarqueeView extends View implements View.OnClickListener 
         //计算距离
         public void reset() {
             int measureWidth = (int) mPaint.measureText(text);
-            drawX = (width - measureWidth) / 2;
+            drawX = (width - measureWidth) >> 1;
             Paint.FontMetrics metrics = mPaint.getFontMetrics();
-            drawY = (int) (centerY + (metrics.bottom - metrics.top) / 2 - metrics.bottom);
+            drawY = (int) (centerY + ((int) (metrics.bottom - metrics.top) >> 1) - metrics.bottom);
         }
 
         //绘制文字

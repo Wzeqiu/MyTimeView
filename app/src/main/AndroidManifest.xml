@@ -15,6 +15,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".TimeActivity">
+        </activity>
+        <activity android:name=".VerticalMarqueeActivity">
+        </activity>
+        <activity android:name=".RadarActivity">
+        </activity>
     </application>
 
 </manifest>
