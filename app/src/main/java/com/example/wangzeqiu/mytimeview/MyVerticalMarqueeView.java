@@ -21,6 +21,7 @@ import java.util.TimerTask;
 
 /**
  * Created by WangZeQiu on 2017/2/9.
+ * 垂直跑马灯
  */
 
 public class MyVerticalMarqueeView extends View implements View.OnClickListener {
@@ -166,10 +167,15 @@ public class MyVerticalMarqueeView extends View implements View.OnClickListener 
         return this;
     }
 
-
     //设置数据
     public MyVerticalMarqueeView setData(ArrayList<String> datas) {
         this.mList = datas == null ? new ArrayList<String>() : datas;
+        return this;
+    }
+
+    //设置TextSize
+    public MyVerticalMarqueeView setTextSize(int size) {
+        this.mPaint.setTextSize(sp2px(size));
         return this;
     }
 
@@ -271,5 +277,11 @@ public class MyVerticalMarqueeView extends View implements View.OnClickListener 
             mPaint.setAlpha(alpha);
             canvas.drawText(text, drawX, drawY, mPaint);
         }
+    }
+
+
+    private int sp2px(int sp) {
+        float density = getContext().getResources().getDisplayMetrics().scaledDensity;
+        return (int) (sp * density + 0.5f);
     }
 }

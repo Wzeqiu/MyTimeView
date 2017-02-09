@@ -14,6 +14,7 @@ import java.util.TimerTask;
 
 /**
  * Created by WangZeQiu on 2017/2/8.
+ * 钟表
  */
 
 public class MyTime extends View {
@@ -56,8 +57,8 @@ public class MyTime extends View {
         mPaint.setColor(Color.RED);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(10);
-        RectF rectF=new RectF(getWidth() / 6, getHeight() / 2 - getWidth() / 3, getWidth() * 5 / 6, getHeight() / 2 + getWidth() / 3);
-        canvas.drawArc(rectF,0,360,true,mPaint);
+        RectF rectF = new RectF(getWidth() / 6, getHeight() / 2 - getWidth() / 3, getWidth() * 5 / 6, getHeight() / 2 + getWidth() / 3);
+        canvas.drawArc(rectF, 0, 360, true, mPaint);
         mPaint.setColor(Color.WHITE);
         mPaint.setStrokeWidth(5);
         //将坐标原点移到圆心处
@@ -142,7 +143,7 @@ public class MyTime extends View {
                 mHourDegree = 0;
             }
             mSecondDegree = mSecondDegree + 6;//秒针
-            mMinDegree = mMinDegree +0.1f;//分针
+            mMinDegree = mMinDegree + 0.1f;//分针
             mHourDegree = mHourDegree + 1.0f / 120;//时针
             postInvalidate();
         }
