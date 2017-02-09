@@ -120,15 +120,13 @@ public class MyVerticalMarqueeView extends View implements View.OnClickListener 
                 int alpha = (int) animation.getAnimatedValue("alpha");
                 mPaintTexts.get(0).setAlpha(alpha).setCenterY(scrollY).reset();
                 mPaintTexts.get(1).setAlpha(255 - alpha).setCenterY(scrollY + height).reset();
-
-                postInvalidate();
+                invalidate();
             }
         });
 
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-
             }
 
             @Override
@@ -267,7 +265,6 @@ public class MyVerticalMarqueeView extends View implements View.OnClickListener 
             Paint.FontMetrics metrics = mPaint.getFontMetrics();
             drawY = (int) (centerY + (metrics.bottom - metrics.top) / 2 - metrics.bottom);
         }
-
 
         //绘制文字
         public void draw(Canvas canvas) {
