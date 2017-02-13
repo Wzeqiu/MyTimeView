@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".RadarActivity">
         </activity>
+        <activity android:name=".SwitchActivity">
+        </activity>
     </application>
 
 </manifest>

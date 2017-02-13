@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:switch="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_switch"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.example.wangzeqiu.mytimeview.SwitchActivity">
+
+
+
+    <com.example.wangzeqiu.mytimeview.views.MySwitch
+        android:id="@+id/mySwitch"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        switch:bag_color="@color/colorAccent"/>
+
+</LinearLayout>
