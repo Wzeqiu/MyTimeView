@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.SweepGradient;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -53,13 +54,57 @@ public class RadarView extends View {
 
     }
 
+    //默认执行，计算view的宽高,在onDraw()之前
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int width = measureWidth(widthMeasureSpec);
+        int height = measureHeight(heightMeasureSpec);
+        //设置宽高
+        setMeasuredDimension(width, height);
+    }
+
+
+    //根据xml的设定获取宽度
+    private int measureWidth(int measureSpec) {
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+        //wrap_content
+        if (specMode == MeasureSpec.AT_MOST) {
+
+        }
+        //fill_parent或者精确值
+        else if (specMode == MeasureSpec.EXACTLY) {
+
+        }
+        Log.i("这个控件的宽度----------", "specMode=" + specMode + " specSize=" + specSize);
+
+        return specSize;
+    }
+
+    //根据xml的设定获取高度
+    private int measureHeight(int measureSpec) {
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+        //wrap_content
+        if (specMode == MeasureSpec.AT_MOST) {
+
+        }
+        //fill_parent或者精确值
+        else if (specMode == MeasureSpec.EXACTLY) {
+
+        }
+        Log.i("这个控件的高度----------", "specMode:" + specMode + " specSize:" + specSize);
+
+        return specSize;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        canvas.drawCircle(getWidth() / 2, getHeight() / 2, 50, mPaint);
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, 100, mPaint);
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, 200, mPaint);
-        canvas.drawCircle(getWidth() / 2, getHeight() / 2, 300, mPaint);
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, 400, mPaint);
 
         canvas.drawLine(getWidth() / 2 - 400, getHeight() / 2, getWidth() / 2 + 400, getHeight() / 2, mPaint);

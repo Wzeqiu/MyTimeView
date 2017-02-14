@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_radar"
@@ -7,8 +7,18 @@
     android:layout_height="match_parent"
     tools:context="com.example.wangzeqiu.mytimeview.RadarActivity">
 
-    <com.example.wangzeqiu.mytimeview.views.RadarView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <com.example.wangzeqiu.mytimeview.views.RadarView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.example.wangzeqiu.mytimeview.views.FZFBX
+            android:layout_width="400dp"
+            android:layout_height="400dp"/>
+    </LinearLayout>
+</ScrollView>
