@@ -40,6 +40,7 @@ public class MySwitch extends View implements Checkable {
     private int maxAlpha = 200;     //阴影层最大的透明度
     private boolean isEnd = true;   //动画是否结束
     private boolean isChecked = true;  //选中状态
+    private boolean isCancal = false;
     private int color = 0xFF228B22; //颜色
     private int DURATION_TIME = 5000;  //动画时间
 
@@ -63,8 +64,6 @@ public class MySwitch extends View implements Checkable {
     }
 
     void init() {
-
-
         //椭圆画笔
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.FILL);
@@ -154,7 +153,10 @@ public class MySwitch extends View implements Checkable {
             @Override
             public void onAnimationEnd(Animator animation) {
                 isEnd = true;
-                isChecked = !isChecked;
+                if (!isCancal) {
+                    isChecked = !isChecked;
+                }
+                isCancal = false;
                 if (mChangeListener != null) {
                     mChangeListener.onCheckedChanged(isChecked);
                 }
@@ -162,7 +164,14 @@ public class MySwitch extends View implements Checkable {
 
             @Override
             public void onAnimationCancel(Animator animation) {
-
+                isCancal = true;
+                if (isChecked) {
+                    centerCircleX = fillet;
+                } else {
+                    alpha=minAlpha;
+                    centerCircleX = width - fillet;
+                }
+                invalidate();
             }
 
             @Override
@@ -195,16 +204,7 @@ public class MySwitch extends View implements Checkable {
     @Override
     public void setChecked(boolean checked) {
         isChecked = checked;
-        if (isAttachedToWindow() && isLaidOut()) {
-//            if (isEnd) {
-//                startAnimator();
-//            }
-        } else {
-            cancelAnimation();
-            this.isChecked = checked;
-
-        }
-        invalidate();
+        cancelAnimation();
     }
 
     @Override
