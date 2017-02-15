@@ -32,6 +32,7 @@ public class FZFBX extends View {
     private Paint mPaint;                   //中间圆
     private Paint mPaint1;                  //波纹
     private Bitmap mCenterBitmap;
+    private Bitmap mCircleImageBitmap;
 
     private int centerBitmapHeight;         //中间图片的高度
     private int centerBitmapWidth;          //中间图片的宽度
@@ -41,6 +42,11 @@ public class FZFBX extends View {
     private int height;                     //画布的高
     private int alpha = 255;
     private int radius;
+    private int rippleRadius;
+    private int DURATION_TIME = 5000;
+    private int INTERVAL_TIME = 1000;
+    private int maxAlpha = 128;
+    private int maxSize = DURATION_TIME / INTERVAL_TIME;
     private List<ValueAnimator> mValueAnimators;
 
     public FZFBX(Context context) {
@@ -57,14 +63,8 @@ public class FZFBX extends View {
     }
 
     void init() {
-        mCenterBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.center);
-        centerBitmapHeight = mCenterBitmap.getHeight();
-        centerBitmapWidth = mCenterBitmap.getWidth();
-        if (centerBitmapWidth > centerBitmapHeight) {
-            centerBitmapRadius = centerBitmapHeight >> 1;
-        } else {
-            centerBitmapRadius = centerBitmapWidth >> 1;
-        }
+        mCircleImageBitmap = createCircleImage();
+
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint1.setColor(Color.BLUE);
@@ -78,7 +78,11 @@ public class FZFBX extends View {
         width = MeasureSpec.getSize(widthMeasureSpec) - getPaddingLeft() - getPaddingRight();
         height = MeasureSpec.getSize(heightMeasureSpec) - getPaddingTop() - getPaddingBottom();
 
-
+        if (width > height) {
+            rippleRadius = height >> 1;
+        } else {
+            rippleRadius = width >> 1;
+        }
     }
 
     @Override
@@ -96,67 +100,67 @@ public class FZFBX extends View {
         if (rect == null) {
             rect = new Rect((width >> 1) - centerBitmapRadius, (height >> 1) - centerBitmapRadius, (width >> 1) + centerBitmapRadius, (height >> 1) + centerBitmapRadius);
         }
-        if(mValueAnimators.size()==0){
-            mPaint1.setAlpha(32);
-            canvas.drawCircle(width >> 1, height >> 1, 600, mPaint1);
-            mPaint1.setAlpha(64);
-            canvas.drawCircle(width >> 1, height >> 1, 450, mPaint1);
-            mPaint1.setAlpha(96);
-            canvas.drawCircle(width >> 1, height >> 1, 300, mPaint1);
-            mPaint1.setAlpha(128);
-            canvas.drawCircle(width >> 1, height >> 1, 150, mPaint1);
-        }else{
+        if (mValueAnimators.size() == 0) {
+            for (int i = 1; i <= maxSize; i++) {
+                mPaint1.setAlpha(maxAlpha * i / maxSize - 1 >> 1);
+                canvas.drawCircle(width >> 1, height >> 1, rippleRadius * i / maxSize - 1, mPaint1);
+            }
+        } else {
             Iterator<ValueAnimator> iterator = mValueAnimators.iterator();
             while (iterator.hasNext()) {
                 ValueAnimator valueAnimator = iterator.next();
-                if ((Integer)valueAnimator.getAnimatedValue("radius")<599) {
-                    System.out.println("(Integer)valueAnimator.getAnimatedValue)==="+valueAnimator.getAnimatedValue("radius"));
+                if ((Integer) valueAnimator.getAnimatedValue("radius") < rippleRadius - 1) {
                     mPaint1.setAlpha((Integer) valueAnimator.getAnimatedValue("alpha"));
                     canvas.drawCircle(width >> 1, height >> 1, (Integer) valueAnimator.getAnimatedValue("radius"), mPaint1);
-
-
                 } else {
-                    System.out.println("???????????????????????");
                     valueAnimator.cancel();
                     iterator.remove();
-
                 }
-
             }
-
         }
-
-
-
-        canvas.drawBitmap(createCircleImage(mCenterBitmap), null, rect, mPaint);
-
+        if (mCircleImageBitmap == null) {
+            mCircleImageBitmap = createCircleImage();
+        }
+        canvas.drawBitmap(mCircleImageBitmap, null, rect, mPaint);
+        Rect rect1 = new Rect((width >> 1) - centerBitmapRadius*3, (height >> 1) - centerBitmapRadius, (width >> 1) - centerBitmapRadius, (height >> 1) + centerBitmapRadius);
+        canvas.drawBitmap(mCircleImageBitmap, null, rect1, mPaint);
     }
 
     /**
      * 创建圆图片
      *
-     * @param bitmap
      * @return
      */
-    public Bitmap createCircleImage(Bitmap bitmap) {
+    public Bitmap createCircleImage() {
+        Bitmap mCenterBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.center);
+        centerBitmapHeight = mCenterBitmap.getHeight();
+        centerBitmapWidth = mCenterBitmap.getWidth();
+        if (centerBitmapWidth > centerBitmapHeight) {
+            centerBitmapRadius = centerBitmapHeight >> 1;
+        } else {
+            centerBitmapRadius = centerBitmapWidth >> 1;
+        }
         Bitmap bitmap1 = Bitmap.createBitmap(centerBitmapRadius << 1, centerBitmapRadius << 1, Bitmap.Config.ARGB_8888);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         Canvas canvas = new Canvas(bitmap1);
         canvas.drawCircle(centerBitmapRadius, centerBitmapRadius, centerBitmapRadius, paint);
         //使用SRC_IN
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, 0, 0, paint);
+        canvas.drawBitmap(mCenterBitmap, 0, 0, paint);
+        mCenterBitmap.recycle();
         return bitmap1;
     }
 
+
     public void start() {
-        PropertyValuesHolder holder = PropertyValuesHolder.ofInt("radius", centerBitmapRadius, 600);
-        PropertyValuesHolder holder1 = PropertyValuesHolder.ofInt("alpha", 128, 0);
+
+        PropertyValuesHolder holder = PropertyValuesHolder.ofInt("radius", centerBitmapRadius, rippleRadius);
+        PropertyValuesHolder holder1 = PropertyValuesHolder.ofInt("alpha", maxAlpha, 0);
         ValueAnimator valueAnimator = ValueAnimator.ofPropertyValuesHolder(holder, holder1);
         valueAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
         valueAnimator.setRepeatMode(ValueAnimator.RESTART);
-        valueAnimator.setDuration(4000);
+        valueAnimator.setDuration(DURATION_TIME * mValueAnimators.size() / maxSize);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -165,7 +169,7 @@ public class FZFBX extends View {
                 invalidate();
             }
         });
-        System.out.println("mValueAnimators=========="+mValueAnimators.size());
+        System.out.println("mValueAnimators==========" + mValueAnimators.size());
         mValueAnimators.add(valueAnimator);
         valueAnimator.start();
     }
@@ -186,7 +190,7 @@ public class FZFBX extends View {
         public void run() {
             start();
             invalidate();
-            postDelayed(mWaveRunable, 1000);
+            postDelayed(mWaveRunable, INTERVAL_TIME);
         }
     };
 
