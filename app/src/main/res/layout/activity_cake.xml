@@ -2,26 +2,22 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_radar"
+    android:id="@+id/activity_cake"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.wangzeqiu.mytimeview.RadarActivity">
+    tools:context="com.example.wangzeqiu.mytimeview.CakeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <com.example.wangzeqiu.mytimeview.views.RadarView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
 
-        <com.example.wangzeqiu.mytimeview.views.FZFBX
+        <com.example.wangzeqiu.mytimeview.views.Cake
             android:layout_width="400dp"
             android:layout_height="400dp"/>
 
-        <com.example.wangzeqiu.mytimeview.views.Spider
+        <com.example.wangzeqiu.mytimeview.views.CheckView
             android:layout_width="400dp"
             android:layout_height="400dp"/>
     </LinearLayout>

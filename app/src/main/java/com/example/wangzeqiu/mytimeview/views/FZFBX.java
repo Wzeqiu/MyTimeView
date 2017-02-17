@@ -8,9 +8,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -122,8 +124,11 @@ public class FZFBX extends View {
             mCircleImageBitmap = createCircleImage();
         }
         canvas.drawBitmap(mCircleImageBitmap, null, rect, mPaint);
-        Rect rect1 = new Rect((width >> 1) - centerBitmapRadius*3, (height >> 1) - centerBitmapRadius, (width >> 1) - centerBitmapRadius, (height >> 1) + centerBitmapRadius);
-        canvas.drawBitmap(mCircleImageBitmap, null, rect1, mPaint);
+        if (mValueAnimators.size() >= 3) {
+            Rect rect1 = new Rect((width >> 1) - centerBitmapRadius * 3, (height >> 1) - centerBitmapRadius, (width >> 1) - centerBitmapRadius, (height >> 1) + centerBitmapRadius);
+            canvas.drawBitmap(mCircleImageBitmap, null, rect1, mPaint);
+        }
+
     }
 
     /**
@@ -160,7 +165,7 @@ public class FZFBX extends View {
         valueAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
         valueAnimator.setRepeatMode(ValueAnimator.RESTART);
-        valueAnimator.setDuration(DURATION_TIME * mValueAnimators.size() / maxSize);
+        valueAnimator.setDuration(DURATION_TIME);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -174,17 +179,23 @@ public class FZFBX extends View {
         valueAnimator.start();
     }
 
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mWaveRunable.run();
+                if (!isStart) {
+                    mWaveRunable.run();
+                    isStart = true;
+                }
+
                 break;
         }
         return super.onTouchEvent(event);
 
     }
 
+    boolean isStart = false;
     private Runnable mWaveRunable = new Runnable() {
         @Override
         public void run() {
@@ -193,5 +204,10 @@ public class FZFBX extends View {
             postDelayed(mWaveRunable, INTERVAL_TIME);
         }
     };
+
+
+
+
+
 
 }
