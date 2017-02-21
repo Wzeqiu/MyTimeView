@@ -1,13 +1,16 @@
 package com.example.wangzeqiu.mytimeview.views;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 /**
  * Created by WangZeQiu on 2017/2/15.
@@ -15,7 +18,23 @@ import android.view.View;
  */
 
 public class Spider extends View {
-    private Paint mPaint;
+    private int count = 6;          //边数
+
+    private Paint mPaint;           //绘制正多边形
+    private Paint mPaint1;          //绘制图形
+
+    private int radius;             //图形半径
+    private int animatorRadius;     //动画执行半径变化
+    private int centerX;            //图形X轴中点
+    private int centerY;            //图形Y轴中点
+    private int spacing;            //每层间距
+
+    private int DURATION_TIME = 500;//动画执行时间
+
+
+    private float radian = (float) (Math.PI * 2 / count);           //正多边形每个角对应的弧度
+    private double datas[] = new double[]{};      //数据比例
+
 
     public Spider(Context context) {
         this(context, null);
@@ -31,89 +50,144 @@ public class Spider extends View {
 
     }
 
+
     void init() {
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setStrokeWidth(3);
+        mPaint.setColor(Color.BLACK);
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(1);
 
 
+        mPaint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaint1.setStyle(Paint.Style.FILL);
+        mPaint1.setColor(Color.RED);
     }
+
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int height = MeasureSpec.getSize(widthMeasureSpec);
+        radius = (int) (Math.min(width, height) / 2 * 0.9f);
+        centerX = width >> 1;
+        centerY = height >> 1;
+        spacing = radius / (count - 1);
+    }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.translate(getWidth() / 2, getHeight() / 2);
-        canvas.drawPoint(0, 0, mPaint);
-        drawStar(canvas, mPaint, Color.BLACK, 200, 6, false);
-        drawStar(canvas, mPaint, Color.BLACK, 300, 6, false);
-        drawStar(canvas, mPaint, Color.BLACK, 400, 6, false);
-        drawStar(canvas, mPaint, Color.BLACK, 500, 6, false);
-        drawStar(canvas, mPaint, Color.BLACK, 600, 6, false);
-        canvas.rotate(30);
-        for (int i = 0; i < 6; i++) {
-            canvas.drawLine(0,0,600,0,mPaint);
-            canvas.rotate(60);
-        }
-
-
-
+        positiveMultilateral(canvas);
+        drawLin(canvas);
+        drawGraphical(canvas);
     }
 
 
-    private void drawStar(Canvas canvas, Paint paint, @ColorInt int color, float radius, int count, boolean isStar) {
-        if ((!isStar) && count < 3) {
-            canvas.translate(-radius, -radius);
-            return;
+    /**
+     * 绘制正多边形
+     *
+     * @param canvas
+     */
+    private void positiveMultilateral(Canvas canvas) {
+        Path path = new Path();
+        for (int i = 1; i < count; i++) {
+            path.reset();
+            for (int j = 0; j < count; j++) {
+                if (j == 0) {
+                    path.moveTo(centerX + spacing * i, centerY);
+                }
+                float x = (float) (centerX + spacing * i * Math.cos(radian * j));
+                float y = (float) (centerY + spacing * i * Math.sin(radian * j));
+                path.lineTo(x, y);
+            }
+            path.close();
+            canvas.drawPath(path, mPaint);
         }
-        if (isStar && count < 5) {
-            canvas.translate(-radius, -radius);
-            return;
+    }
+
+    /**
+     * 绘制直线
+     *
+     * @param canvas
+     */
+    private void drawLin(Canvas canvas) {
+        for (int i = 0; i < count; i++) {
+            float x = (float) (centerX + spacing * (count - 1) * Math.cos(radian * i));
+            float y = (float) (centerY + spacing * (count - 1) * Math.sin(radian * i));
+            canvas.drawLine(centerX, centerY, x, y, mPaint);
         }
-        canvas.rotate(-90);
-        if (paint == null) {
-            paint = new Paint();
-        } else {
-            paint.reset();
+    }
+
+    /**
+     * 绘制图形
+     *
+     * @param canvas
+     */
+    private void drawGraphical(Canvas canvas) {
+        if (datas.length == 0) {
+            return;
         }
         Path path = new Path();
-        float inerRadius = count % 2 == 0 ?
-                (radius * (cos(360 / count / 2) - sin(360 / count / 2) * sin(90 - 360 / count) / cos(90 - 360 / count)))
-                : (radius * sin(360 / count / 4) / sin(180 - 360 / count / 2 - 360 / count / 4));
-
+        mPaint1.setAlpha(255);
         for (int i = 0; i < count; i++) {
+            float x = (float) (centerX + animatorRadius * datas[i] * Math.cos(radian * i));
+            float y = (float) (centerY + animatorRadius * datas[i] * Math.sin(radian * i));
             if (i == 0) {
-                path.moveTo(radius * cos(360 / count * i), radius * sin(360 / count * i));
+                path.moveTo(x, y);
             } else {
-                path.lineTo(radius * cos(360 / count * i), radius * sin(360 / count * i));
+                path.lineTo(x, y);
             }
-            if (isStar) {
-                path.lineTo(inerRadius * cos(360 / count * i + 360 / count / 2), inerRadius * sin(360 / count * i + 360 / count / 2));
-            }
+            canvas.drawCircle(x, y, 10, mPaint1);
         }
         path.close();
-        paint.setColor(color);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(10);
-        canvas.drawPath(path, paint);
-        canvas.rotate(90);
+        mPaint1.setAlpha(128);
+        canvas.drawPath(path, mPaint1);
     }
 
+
     /**
-     * Math.sin的参数为弧度，使用起来不方便，重新封装一个根据角度求sin的方法
+     * 动画
+     */
+    private void startAnimator() {
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, radius);
+        valueAnimator.setDuration(DURATION_TIME);
+        valueAnimator.setInterpolator(new DecelerateInterpolator());
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                animatorRadius = (int) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        valueAnimator.start();
+    }
+
+
+    /**
+     * 设置数据
      *
-     * @param num 角度
-     * @return
+     * @param datas
      */
-    float sin(int num) {
-        return (float) Math.sin(num * Math.PI / 180);
+    public void setDatas(@NonNull double... datas) {
+        count = datas.length;
+        radian = (float) (Math.PI * 2 / count);
+        spacing = radius / (count - 1);
+        this.datas = datas;
+        startAnimator();
     }
 
-    /**
-     * 与sin同理
-     */
-    float cos(int num) {
-        return (float) Math.cos(num * Math.PI / 180);
-    }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                setDatas(new double[]{0.8, 0.6, 1, 0.8});
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
 }
