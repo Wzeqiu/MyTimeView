@@ -22,7 +22,7 @@
             android:layout_height="400dp"/>
 
         <com.example.wangzeqiu.mytimeview.views.Spider
-            android:layout_width="400dp"
+            android:layout_width="340dp"
             android:layout_height="400dp"/>
     </LinearLayout>
 </ScrollView>

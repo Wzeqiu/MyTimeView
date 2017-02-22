@@ -22,6 +22,7 @@ public class Spider extends View {
 
     private Paint mPaint;           //绘制正多边形
     private Paint mPaint1;          //绘制图形
+    private Paint textPaint;        //绘制文字
 
     private int radius;             //图形半径
     private int animatorRadius;     //动画执行半径变化
@@ -29,7 +30,7 @@ public class Spider extends View {
     private int centerY;            //图形Y轴中点
     private int spacing;            //每层间距
 
-    private int DURATION_TIME = 500;//动画执行时间
+    private int DURATION_TIME = 5000;//动画执行时间
 
 
     private float radian = (float) (Math.PI * 2 / count);           //正多边形每个角对应的弧度
@@ -51,13 +52,16 @@ public class Spider extends View {
     }
 
 
-    void init() {
-
+    private void init() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStrokeWidth(3);
         mPaint.setColor(Color.BLACK);
         mPaint.setStyle(Paint.Style.STROKE);
 
+
+        textPaint=new Paint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setStrokeWidth(2);
+        textPaint.setTextSize(30);
 
         mPaint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint1.setStyle(Paint.Style.FILL);
@@ -82,6 +86,7 @@ public class Spider extends View {
         super.onDraw(canvas);
         positiveMultilateral(canvas);
         drawLin(canvas);
+        drawText(canvas);
         drawGraphical(canvas);
     }
 
@@ -122,6 +127,35 @@ public class Spider extends View {
     }
 
     /**
+     * 绘制文字
+     *
+     * @param canvas
+     */
+    private void drawText(Canvas canvas) {
+        if (datas.length == 0) {
+            return;
+        }
+        Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
+        float fontHeight = fontMetrics.descent - fontMetrics.ascent;
+        for (int i = 0; i < count; i++) {
+            float x = (float) (centerX + (spacing * (count - 1) + fontHeight/2) * Math.cos(radian * i));
+            float y = (float) (centerY + (spacing * (count - 1) + fontHeight/2) * Math.sin(radian * i));
+            if(radian*i>=0&&radian*i<=Math.PI/2){//第4象限
+                canvas.drawText(String.valueOf(datas[i]), x,y,textPaint);
+            }else if(radian*i>=3*Math.PI/2&& radian*i<=Math.PI*2){//第3象限
+                canvas.drawText(String.valueOf(datas[i]), x,y,textPaint);
+            }else if(radian*i>Math.PI/2&&radian*i<=Math.PI){//第2象限
+                float dis = textPaint.measureText(String.valueOf(datas[i]));//文本长度
+                canvas.drawText(String.valueOf(datas[i]), x-dis,y,textPaint);
+            }else if(radian*i>=Math.PI&&radian*i<3*Math.PI/2){//第1象限
+                float dis = textPaint.measureText(String.valueOf(datas[i]));//文本长度
+                canvas.drawText(String.valueOf(datas[i]), x-dis,y,textPaint);
+            }
+        }
+
+    }
+
+    /**
      * 绘制图形
      *
      * @param canvas
@@ -132,9 +166,16 @@ public class Spider extends View {
         }
         Path path = new Path();
         mPaint1.setAlpha(255);
+        float x;
+        float y;
         for (int i = 0; i < count; i++) {
-            float x = (float) (centerX + animatorRadius * datas[i] * Math.cos(radian * i));
-            float y = (float) (centerY + animatorRadius * datas[i] * Math.sin(radian * i));
+            if (animatorRadius > radius * datas[i]) {
+                x = (float) (centerX + radius * datas[i] * Math.cos(radian * i));
+                y = (float) (centerY + radius * datas[i] * Math.sin(radian * i));
+            } else {
+                x = (float) (centerX + animatorRadius * Math.cos(radian * i));
+                y = (float) (centerY + animatorRadius * Math.sin(radian * i));
+            }
             if (i == 0) {
                 path.moveTo(x, y);
             } else {
@@ -185,7 +226,7 @@ public class Spider extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                setDatas(new double[]{0.8, 0.6, 1, 0.8});
+                setDatas(new double[]{0.8, 0.7, 1, 0.5, 0.1, 0.9});
                 break;
         }
         return super.onTouchEvent(event);
