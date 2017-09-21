@@ -5,6 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.example.wangzeqiu.mytimeview.activitys.CakeActivity;
+import com.example.wangzeqiu.mytimeview.activitys.LoadViewActivity;
+import com.example.wangzeqiu.mytimeview.activitys.RadarActivity;
+import com.example.wangzeqiu.mytimeview.activitys.SwitchActivity;
+import com.example.wangzeqiu.mytimeview.activitys.TimeActivity;
+import com.example.wangzeqiu.mytimeview.activitys.VerticalMarqueeActivity;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -17,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button3).setOnClickListener(this);
         findViewById(R.id.button4).setOnClickListener(this);
         findViewById(R.id.button5).setOnClickListener(this);
+        findViewById(R.id.button6).setOnClickListener(this);
 
     }
 
@@ -39,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button5:
                 startActivity(new Intent(this, CakeActivity.class));
+                break;
+            case R.id.button6:
+                startActivity(new Intent(this, LoadViewActivity.class));
                 break;
         }
 

@@ -5,7 +5,7 @@
     android:id="@+id/activity_vertical_marquee"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.wangzeqiu.mytimeview.VerticalMarqueeActivity">
+    tools:context="com.example.wangzeqiu.mytimeview.activitys.VerticalMarqueeActivity">
 
     <com.example.wangzeqiu.mytimeview.views.MyVerticalMarqueeView
         android:id="@+id/myViews"

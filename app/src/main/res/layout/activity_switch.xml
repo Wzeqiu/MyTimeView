@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.example.wangzeqiu.mytimeview.SwitchActivity">
+    tools:context="com.example.wangzeqiu.mytimeview.activitys.SwitchActivity">
 
 
 

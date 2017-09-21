@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_time"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.wangzeqiu.mytimeview.activitys.TimeActivity">
+    tools:context="com.example.wangzeqiu.mytimeview.activitys.LoadViewActivity">
 
-    <com.example.wangzeqiu.mytimeview.views.MyTime
+    <com.example.wangzeqiu.mytimeview.views.LoadingView
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>

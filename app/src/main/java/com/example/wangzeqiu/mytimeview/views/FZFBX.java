@@ -40,8 +40,6 @@ public class FZFBX extends View {
     private Rect rect;                      //
     private int width;                      //画布的宽
     private int height;                     //画布的高
-    private int alpha = 255;
-    private int radius;
     private int rippleRadius;
     private int INTERVAL_TIME = 1000;
     private int NUMBER = 8;
@@ -49,6 +47,8 @@ public class FZFBX extends View {
     private int maxAlpha = 128;
     private int maxSize = DURATION_TIME / INTERVAL_TIME;
     private List<ValueAnimator> mValueAnimators;
+
+    private long startTime;
 
     public FZFBX(Context context) {
         this(context, null);
@@ -154,7 +154,6 @@ public class FZFBX extends View {
 
 
     public void start() {
-
         PropertyValuesHolder holder = PropertyValuesHolder.ofInt("radius", centerBitmapRadius, rippleRadius);
         PropertyValuesHolder holder1 = PropertyValuesHolder.ofInt("alpha", maxAlpha, 0);
         ValueAnimator valueAnimator = ValueAnimator.ofPropertyValuesHolder(holder, holder1);
@@ -165,8 +164,6 @@ public class FZFBX extends View {
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                radius = (int) animation.getAnimatedValue("radius");
-                alpha = (int) animation.getAnimatedValue("alpha");
                 invalidate();
             }
         });
@@ -181,6 +178,7 @@ public class FZFBX extends View {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if (!isStart) {
+                    startTime = System.currentTimeMillis();
                     mWaveRunable.run();
                     isStart = true;
                 }

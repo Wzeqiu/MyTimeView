@@ -38,4 +38,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="饼状图"/>
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="加载动画"/>
 </LinearLayout>

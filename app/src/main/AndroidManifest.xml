@@ -15,15 +15,17 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".TimeActivity">
+        <activity android:name=".activitys.TimeActivity">
         </activity>
-        <activity android:name=".VerticalMarqueeActivity">
+        <activity android:name=".activitys.VerticalMarqueeActivity">
         </activity>
-        <activity android:name=".RadarActivity">
+        <activity android:name=".activitys.RadarActivity">
         </activity>
-        <activity android:name=".SwitchActivity">
+        <activity android:name=".activitys.SwitchActivity">
         </activity>
-        <activity android:name=".CakeActivity">
+        <activity android:name=".activitys.CakeActivity">
+        </activity>
+        <activity android:name=".activitys.LoadViewActivity">
         </activity>
     </application>
 

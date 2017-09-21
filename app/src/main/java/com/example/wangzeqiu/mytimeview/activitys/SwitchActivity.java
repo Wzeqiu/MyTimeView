@@ -1,9 +1,10 @@
-package com.example.wangzeqiu.mytimeview;
+package com.example.wangzeqiu.mytimeview.activitys;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.example.wangzeqiu.mytimeview.R;
 import com.example.wangzeqiu.mytimeview.views.MySwitch;
 
 public class SwitchActivity extends AppCompatActivity implements MySwitch.OnCheckedChangeListener {

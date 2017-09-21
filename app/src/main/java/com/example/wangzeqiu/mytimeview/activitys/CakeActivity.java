@@ -1,17 +1,15 @@
-package com.example.wangzeqiu.mytimeview;
+package com.example.wangzeqiu.mytimeview.activitys;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-/**
- * 钟表
- */
-public class TimeActivity extends AppCompatActivity {
+import com.example.wangzeqiu.mytimeview.R;
+
+public class CakeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_time);
+        setContentView(R.layout.activity_cake);
     }
-
 }
