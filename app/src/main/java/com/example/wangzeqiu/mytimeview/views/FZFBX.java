@@ -8,11 +8,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,8 +43,9 @@ public class FZFBX extends View {
     private int alpha = 255;
     private int radius;
     private int rippleRadius;
-    private int DURATION_TIME = 5000;
     private int INTERVAL_TIME = 1000;
+    private int NUMBER = 8;
+    private int DURATION_TIME = INTERVAL_TIME * NUMBER;
     private int maxAlpha = 128;
     private int maxSize = DURATION_TIME / INTERVAL_TIME;
     private List<ValueAnimator> mValueAnimators;
@@ -114,9 +113,6 @@ public class FZFBX extends View {
                 if ((Integer) valueAnimator.getAnimatedValue("radius") < rippleRadius - 1) {
                     mPaint1.setAlpha((Integer) valueAnimator.getAnimatedValue("alpha"));
                     canvas.drawCircle(width >> 1, height >> 1, (Integer) valueAnimator.getAnimatedValue("radius"), mPaint1);
-                } else {
-                    valueAnimator.cancel();
-                    iterator.remove();
                 }
             }
         }
@@ -199,15 +195,14 @@ public class FZFBX extends View {
     private Runnable mWaveRunable = new Runnable() {
         @Override
         public void run() {
-            start();
-            invalidate();
-            postDelayed(mWaveRunable, INTERVAL_TIME);
+            if (mValueAnimators.size() == NUMBER) {
+                removeCallbacks(mWaveRunable);
+            } else {
+                start();
+                postDelayed(mWaveRunable, INTERVAL_TIME);
+            }
         }
     };
-
-
-
-
 
 
 }
