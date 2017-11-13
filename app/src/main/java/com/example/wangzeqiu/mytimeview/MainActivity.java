@@ -13,6 +13,7 @@ import com.example.wangzeqiu.mytimeview.activitys.SwitchActivity;
 import com.example.wangzeqiu.mytimeview.activitys.TimeActivity;
 import com.example.wangzeqiu.mytimeview.activitys.VerticalMarqueeActivity;
 
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
