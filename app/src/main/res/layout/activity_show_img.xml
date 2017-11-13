@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lin_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.wangzeqiu.mytimeview.activitys.ShowImgActivity">
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+
+    <ImageView
+        android:id="@+id/iv_img1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="3dp"/>
+
+    <ImageView
+        android:id="@+id/iv_img2"
+        android:layout_width="100dp"
+        android:layout_height="104dp"
+        android:layout_marginTop="3dp"/>
+
+    <ImageView
+        android:id="@+id/iv_img3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="3dp"/>
+
+
+</LinearLayout>

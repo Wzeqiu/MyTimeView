@@ -8,12 +8,12 @@ import android.view.View;
 import com.example.wangzeqiu.mytimeview.activitys.CakeActivity;
 import com.example.wangzeqiu.mytimeview.activitys.LoadViewActivity;
 import com.example.wangzeqiu.mytimeview.activitys.RadarActivity;
+import com.example.wangzeqiu.mytimeview.activitys.ShowImgActivity;
 import com.example.wangzeqiu.mytimeview.activitys.SwitchActivity;
 import com.example.wangzeqiu.mytimeview.activitys.TimeActivity;
 import com.example.wangzeqiu.mytimeview.activitys.VerticalMarqueeActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +25,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button4).setOnClickListener(this);
         findViewById(R.id.button5).setOnClickListener(this);
         findViewById(R.id.button6).setOnClickListener(this);
+        findViewById(R.id.button7).setOnClickListener(this);
         //test1
         //test2
         //test2
     }
-
-
 
     @Override
     public void onClick(View v) {
@@ -53,8 +52,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button6:
                 startActivity(new Intent(this, LoadViewActivity.class));
                 break;
+            case R.id.button7:
+                startActivity(new Intent(this, ShowImgActivity.class));
+                break;
         }
 
     }
+
 
 }

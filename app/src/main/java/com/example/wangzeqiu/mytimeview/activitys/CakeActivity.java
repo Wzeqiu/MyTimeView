@@ -11,5 +11,12 @@ public class CakeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cake);
+        //test1
+        //test2
+        //test3
+        //test4
+        //5
+        //test4
+        //test4
     }
 }
