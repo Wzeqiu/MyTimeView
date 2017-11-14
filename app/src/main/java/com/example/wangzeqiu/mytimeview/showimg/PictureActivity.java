@@ -11,26 +11,35 @@ import android.view.KeyEvent;
 import com.example.wangzeqiu.mytimeview.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PictureActivity extends AppCompatActivity implements StatusListener {
+    public static final String X = "x";
+    public static final String Y = "y";
+    public static final String WIDTH = "width";
+    public static final String HEIGHT = "height";
+    public static final String POSITION = "position";
+    public static final String COLUMN = "column";
+    public static final String HORIZONTAL_INTERVAL = "horizontal_interval";
+    public static final String VERTICAL_INTERVAL = "vertical_interval";
+    public static final String LIST_DATE = "list_date";
+
+
     private ViewPager mViewPager;
     private ImagePagerAdapter mAdapter;
-    private List<String> listPath;
 
 
     public static void getInstance(Context context, ArrayList<String> listPath, int position, int x, int y, int
             width, int height, int column, int horizontal_interval, int vertical_interval) {
         Bundle bundle = new Bundle();
-        bundle.putInt("x", x);
-        bundle.putInt("y", y);
-        bundle.putInt("width", width);
-        bundle.putInt("height", height);
-        bundle.putInt("position", position);
-        bundle.putInt("column", column);
-        bundle.putInt("horizontal_interval", horizontal_interval);
-        bundle.putInt("vertical_interval", vertical_interval);
-        bundle.putStringArrayList("listPath", listPath);
+        bundle.putInt(X, x);
+        bundle.putInt(Y, y);
+        bundle.putInt(WIDTH, width);
+        bundle.putInt(HEIGHT, height);
+        bundle.putInt(POSITION, position);
+        bundle.putInt(COLUMN, column);
+        bundle.putInt(HORIZONTAL_INTERVAL, horizontal_interval);
+        bundle.putInt(VERTICAL_INTERVAL, vertical_interval);
+        bundle.putStringArrayList(LIST_DATE, listPath);
         Intent intent = new Intent(context, PictureActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);
@@ -44,19 +53,9 @@ public class PictureActivity extends AppCompatActivity implements StatusListener
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
 
         Intent intent = getIntent();
-        int x = intent.getIntExtra("x", 0);
-        int y = intent.getIntExtra("y", 0);
-        int width = intent.getIntExtra("width", 0);
-        int height = intent.getIntExtra("height", 0);
-        int position = intent.getIntExtra("position", 0);
-        int column = intent.getIntExtra("column", 0);
-        int horizontal_interval = intent.getIntExtra("horizontal_interval", 0);
-        int vertical_interval = intent.getIntExtra("vertical_interval", 0);
-        listPath = intent.getStringArrayListExtra("listPath");
+        int position = intent.getIntExtra(POSITION, 0);
 
-
-        mAdapter = new ImagePagerAdapter(this, this, listPath, position, x, y, width, height, column,
-                horizontal_interval, vertical_interval);
+        mAdapter = new ImagePagerAdapter(this, this, intent);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(position);
         setBgAlphaAnimation();

@@ -33,9 +33,7 @@
         </activity>
         <activity android:name=".activitys.ShowImgActivity">
         </activity>
-        <activity
-            android:name=".showimg.PictureActivity"
-            android:theme="@style/AppTheme.Transparent">
+        <activity android:name=".showimg.PictureActivity">
         </activity>
     </application>
 

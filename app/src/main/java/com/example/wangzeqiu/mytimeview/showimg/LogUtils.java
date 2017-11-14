@@ -22,7 +22,7 @@ class LogUtils {
     /**
      * 日志输出时的TAG
      */
-    private static String mTag = "FaceSimilarityLogUtils";
+    private static String mTag = "BigPictureLogUtils";
     /**
      * 日志输出级别NONE
      */

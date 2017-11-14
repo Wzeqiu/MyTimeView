@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.IntEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
@@ -36,19 +37,20 @@ class ImagePagerAdapter extends PagerAdapter {
     private int column, horizontal_interval, vertical_interval;
 
 
-    ImagePagerAdapter(Context context, StatusListener listener, List<String> listPath, int position, int x,
-                      int y, int width, int height, int column, int horizontal_interval, int vertical_interval) {
+    ImagePagerAdapter(Context context, StatusListener listener, Intent intent) {
         this.mContext = context;
         this.mListener = listener;
-        this.listPath = listPath;
-        this.choosePosition = position;
-        this.showX = x;
-        this.showY = y;
-        this.height = height;
-        this.width = width;
-        this.column = column;
-        this.horizontal_interval = DensityUtil.dip2px(context, horizontal_interval);
-        this.vertical_interval = DensityUtil.dip2px(context, vertical_interval);
+
+        this.listPath = intent.getStringArrayListExtra(PictureActivity.LIST_DATE);
+        this.listPath = intent.getStringArrayListExtra(PictureActivity.LIST_DATE);
+        this.choosePosition = intent.getIntExtra(PictureActivity.POSITION, 0);
+        this.showX = intent.getIntExtra(PictureActivity.X, 0);
+        this.showY = intent.getIntExtra(PictureActivity.Y, 0);
+        this.height = intent.getIntExtra(PictureActivity.HEIGHT, 0);
+        this.width = intent.getIntExtra(PictureActivity.WIDTH, 0);
+        this.column = intent.getIntExtra(PictureActivity.COLUMN, 0);
+        this.horizontal_interval = DensityUtil.dip2px(context, intent.getIntExtra(PictureActivity.HORIZONTAL_INTERVAL, 0));
+        this.vertical_interval = DensityUtil.dip2px(context, intent.getIntExtra(PictureActivity.VERTICAL_INTERVAL, 0));
     }
 
 
@@ -229,7 +231,11 @@ class ImagePagerAdapter extends PagerAdapter {
     }
 
     void reckonXY() {
-        showY = showY + (mCurrentPosition - choosePosition) / column * (height + vertical_interval);
-        showX = showX + (mCurrentPosition - choosePosition) % column * (width + horizontal_interval);
+        LogUtils.e(TAG, "mCurrentPosition===" + mCurrentPosition);
+        LogUtils.e(TAG, "choosePosition===" + choosePosition);
+        LogUtils.e(TAG, "column===" + column);
+        showY = vertical_interval + showY - (choosePosition / column) * (height + vertical_interval) +
+                mCurrentPosition / column * (height + vertical_interval);
+        showX = horizontal_interval + mCurrentPosition % column * (width + horizontal_interval);
     }
 }

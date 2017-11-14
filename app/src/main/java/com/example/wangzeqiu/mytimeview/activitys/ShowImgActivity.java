@@ -30,10 +30,10 @@ public class ShowImgActivity extends AppCompatActivity implements View.OnClickLi
         mImageView3.setOnClickListener(this);
         mImageView4.setOnClickListener(this);
 
-        listPath.add("http://f.hiphotos.baidu.com/image/pic/item/2fdda3cc7cd98d1004fc53762a3fb80e7bec9048.jpg");
-        listPath.add("http://d.hiphotos.baidu.com/image/pic/item/b219ebc4b74543a909dda78b15178a82b80114b6.jpg");
-        listPath.add("http://g.hiphotos.baidu.com/image/pic/item/7a899e510fb30f242c19b744c395d143ac4b03f1.jpg");
-        listPath.add("http://f.hiphotos.baidu.com/image/pic/item/a71ea8d3fd1f4134d20654392e1f95cad1c85e47.jpg");
+        listPath.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1510569790440&di=59f62ff2ea0200a9af8815d800b63dce&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201407%2F27%2F20140727123700_JyHky.jpeg");
+        listPath.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1510569790439&di=5a1d090c15d03f9d9ee65b55edd34ea0&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201407%2F27%2F20140727015429_4RFkR.jpeg");
+        listPath.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1510569840563&di=40e68f8bf76aedc74a1576a9e56d6712&imgtype=jpg&src=http%3A%2F%2Fimg1.imgtn.bdimg.com%2Fit%2Fu%3D329377316%2C1618219808%26fm%3D214%26gp%3D0.jpg");
+        listPath.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1510569790437&di=9a4b4784b26f5c828daf17778675ac22&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201407%2F27%2F20140727021834_hrPL3.jpeg");
 
 
         Glide.with(this).load(listPath.get(0)).into(mImageView);
