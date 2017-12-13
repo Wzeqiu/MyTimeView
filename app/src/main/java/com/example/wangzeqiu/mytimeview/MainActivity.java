@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.wangzeqiu.mytimeview.activitys.CakeActivity;
 import com.example.wangzeqiu.mytimeview.activitys.LoadViewActivity;
+import com.example.wangzeqiu.mytimeview.activitys.PermissionActivity;
 import com.example.wangzeqiu.mytimeview.activitys.RadarActivity;
 import com.example.wangzeqiu.mytimeview.activitys.ShowImgActivity;
 import com.example.wangzeqiu.mytimeview.activitys.SwitchActivity;
@@ -15,7 +17,6 @@ import com.example.wangzeqiu.mytimeview.activitys.VerticalMarqueeActivity;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button5).setOnClickListener(this);
         findViewById(R.id.button6).setOnClickListener(this);
         findViewById(R.id.button7).setOnClickListener(this);
+        findViewById(R.id.get_permission).setOnClickListener(this);
+
+
         //test1
         //test2
         //test2
@@ -55,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button7:
                 startActivity(new Intent(this, ShowImgActivity.class));
+                break;
+            case R.id.get_permission:
+                startActivity(new Intent(this, PermissionActivity.class));
                 break;
         }
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.wangzeqiu.mytimeview">
+    package="com.example.wangzeqiu.mytimeview">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,27 +14,20 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activitys.TimeActivity">
-        </activity>
-        <activity android:name=".activitys.VerticalMarqueeActivity">
-        </activity>
-        <activity android:name=".activitys.RadarActivity">
-        </activity>
-        <activity android:name=".activitys.SwitchActivity">
-        </activity>
-        <activity android:name=".activitys.CakeActivity">
-        </activity>
-        <activity android:name=".activitys.LoadViewActivity">
-        </activity>
-        <activity android:name=".activitys.ShowImgActivity">
-        </activity>
-        <activity android:name=".showimg.PictureActivity">
-        </activity>
+        <activity android:name=".activitys.TimeActivity"></activity>
+        <activity android:name=".activitys.VerticalMarqueeActivity"></activity>
+        <activity android:name=".activitys.RadarActivity"></activity>
+        <activity android:name=".activitys.SwitchActivity"></activity>
+        <activity android:name=".activitys.CakeActivity"></activity>
+        <activity android:name=".activitys.LoadViewActivity"></activity>
+        <activity android:name=".activitys.ShowImgActivity"></activity>
+        <activity android:name=".showimg.PictureActivity"></activity>
+        <activity android:name=".activitys.PermissionActivity"></activity>
     </application>
 
 </manifest>
