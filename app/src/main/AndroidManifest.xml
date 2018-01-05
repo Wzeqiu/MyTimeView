@@ -19,15 +19,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activitys.TimeActivity"></activity>
-        <activity android:name=".activitys.VerticalMarqueeActivity"></activity>
-        <activity android:name=".activitys.RadarActivity"></activity>
-        <activity android:name=".activitys.SwitchActivity"></activity>
-        <activity android:name=".activitys.CakeActivity"></activity>
-        <activity android:name=".activitys.LoadViewActivity"></activity>
-        <activity android:name=".activitys.ShowImgActivity"></activity>
-        <activity android:name=".showimg.PictureActivity"></activity>
-        <activity android:name=".activitys.PermissionActivity"></activity>
+        <activity android:name=".activitys.TimeActivity" />
+        <activity android:name=".activitys.VerticalMarqueeActivity" />
+        <activity android:name=".activitys.RadarActivity" />
+        <activity android:name=".activitys.SwitchActivity" />
+        <activity android:name=".activitys.CakeActivity" />
+        <activity android:name=".activitys.LoadViewActivity" />
+        <activity android:name=".activitys.ShowImgActivity" />
+        <activity android:name=".showimg.PictureActivity" />
+        <activity android:name=".activitys.PermissionActivity" />
+        <activity android:name=".activitys.EditPictureActivity"></activity>
     </application>
 
 </manifest>

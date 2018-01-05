@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -14,46 +13,53 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="钟表"/>
+        android:text="钟表" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="垂直跑马灯"/>
+        android:text="垂直跑马灯" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="雷达"/>
+        android:text="雷达" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Switch"/>
+        android:text="Switch" />
 
     <Button
         android:id="@+id/button5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="饼状图"/>
+        android:text="饼状图" />
 
     <Button
         android:id="@+id/button6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="加载动画"/>
+        android:text="加载动画" />
 
     <Button
         android:id="@+id/button7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="查看大图"/>
+        android:text="查看大图" />
+
     <Button
         android:id="@+id/get_permission"
         android:layout_width="match_parent"
-        android:text="获取权限"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="获取权限" />
+
+    <Button
+        android:id="@+id/edit_picture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="图片编辑" />
 </LinearLayout>

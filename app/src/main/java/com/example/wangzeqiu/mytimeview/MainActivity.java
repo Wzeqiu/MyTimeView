@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.wangzeqiu.mytimeview.activitys.CakeActivity;
+import com.example.wangzeqiu.mytimeview.activitys.EditPictureActivity;
 import com.example.wangzeqiu.mytimeview.activitys.LoadViewActivity;
 import com.example.wangzeqiu.mytimeview.activitys.PermissionActivity;
 import com.example.wangzeqiu.mytimeview.activitys.RadarActivity;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button6).setOnClickListener(this);
         findViewById(R.id.button7).setOnClickListener(this);
         findViewById(R.id.get_permission).setOnClickListener(this);
+        findViewById(R.id.edit_picture).setOnClickListener(this);
 
 
         //test1
@@ -62,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.get_permission:
                 startActivity(new Intent(this, PermissionActivity.class));
+                break;
+            case R.id.edit_picture:
+                startActivity(new Intent(this, EditPictureActivity.class));
                 break;
         }
 
