@@ -1,9 +1,10 @@
-package com.example.wangzeqiu.mytimeview.views;
+package com.example.wangzeqiu.mytimeview.views.editpicture;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -18,6 +19,8 @@ import com.example.wangzeqiu.mytimeview.R;
 
 import java.io.InputStream;
 
+import javax.security.auth.login.LoginException;
+
 /**
  * 图片剪切
  */
@@ -25,9 +28,9 @@ public class EditPicture extends View {
     private static final String TAG = "EditPicture";
     private int spacing = 60;// 边距
     private int color = Color.BLACK; // 遮罩层的颜色
-    private int alpha = 150;   // 遮罩层透明度
-    private int colorPaint = Color.WHITE; // 画笔的颜色
-    private int paintWidth = 3; // 画线条画笔宽度
+    private int alpha = 180;   // 遮罩层透明度
+    private int colorPaint = Color.RED; // 画笔的颜色
+    private float paintWidth = 1; // 画线条画笔宽度
     private int hornPaintWidth = 10;//画角三角形画笔宽度
     private int hornLength = 17;//画角三角形边宽度
     private int lineNumber = 2;//网格线的数量
@@ -47,6 +50,8 @@ public class EditPicture extends View {
     private Point downRight = new Point();
     private int area = 30;  //四个角触摸区域反馈大小
 
+    private float degrees = 0;
+
 
     private boolean isReset = true;
     private DownPosition mDownPosition = DownPosition.NONE;
@@ -54,6 +59,23 @@ public class EditPicture extends View {
 
     private float downX;
     private float downY;
+
+    public boolean isReset() {
+        return isReset;
+    }
+
+    public void setReset(boolean reset) {
+        isReset = reset;
+        invalidate();
+    }
+
+    public float getDegrees() {
+        return degrees;
+    }
+
+    public void setDegrees(float degrees) {
+        this.degrees = degrees;
+    }
 
     public EditPicture(Context context) {
         this(context, null);
@@ -74,6 +96,7 @@ public class EditPicture extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         width = w;
         height = h;
+        spacing = (int) (width / 10);
     }
 
     private void init() {
@@ -82,7 +105,7 @@ public class EditPicture extends View {
     }
 
     public void setDate() {
-        InputStream is = getResources().openRawResource(R.drawable.picture);
+        InputStream is = getResources().openRawResource(R.drawable.picture2);
         BitmapDrawable bmpDraw = new BitmapDrawable(is);
         mBitmap = bmpDraw.getBitmap();
         bmpW = mBitmap.getWidth();
@@ -91,12 +114,18 @@ public class EditPicture extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+//        canvas.rotate(90, width / 2, height / 2);
         restart(canvas);
+
     }
 
 
     private void restart(Canvas canvas) {
+//        if (isReset) {
+//            isReset = false;
         drawBitmap(canvas);
+//        } else {
+//        }
         drawFrame(canvas);
     }
 
@@ -105,24 +134,24 @@ public class EditPicture extends View {
         Rect canvasR;
         float changeHeight;
         float changeWidth;
-        float deviation;    // View 的宽与缩放之后的bitmap的宽的一般,或者高
-        changeHeight = height - spacing * 2;
-        changeWidth = width - spacing * 2;
-        if (changeWidth / width > changeHeight / height) {
+        float deviationX = spacing, deviationY = spacing;    // View 的宽与缩放之后的bitmap的宽的一般,或者高
+        changeHeight = height - deviationY * 2;
+        changeWidth = width - deviationX * 2;
+        if (changeWidth / bmpW > changeHeight / bmpH) {
             changeWidth = changeHeight / bmpH * bmpW;
-            deviation = (width - changeWidth) / 2;
-            canvasR = new Rect((int) (spacing + deviation), spacing, (int) (changeWidth + deviation), (int) (spacing + changeHeight));
+            deviationX = (width - changeWidth) / 2;
+            canvasR = new Rect((int) deviationX, (int) deviationY, (int) (changeWidth + deviationX), (int) (deviationY + changeHeight));
         } else {
             changeHeight = changeWidth / bmpW * bmpH;
-            deviation = (height - changeHeight) / 2;
-            canvasR = new Rect(spacing, (int) (spacing + deviation), (int) (changeWidth + spacing), (int) (changeHeight + deviation));
+            deviationY = (height - changeHeight) / 2;
+            canvasR = new Rect((int) deviationX, (int) deviationY, (int) (changeWidth + deviationX), (int) (changeHeight + deviationY));
         }
         if (isReset) {
             isReset = false;
-            topLift.set(spacing, (int) (spacing + deviation));
-            topRight.set((int) (changeWidth + spacing), (int) (spacing + deviation));
-            downLift.set(spacing, (int) (changeHeight + deviation));
-            downRight.set((int) (changeWidth + spacing), (int) (changeHeight + deviation));
+            topLift.set((int) deviationX, (int) deviationY);
+            topRight.set((int) (changeWidth + deviationX), (int) deviationY);
+            downLift.set((int) deviationX, (int) (changeHeight + deviationY));
+            downRight.set((int) (changeWidth + deviationX), (int) (changeHeight + deviationY));
         }
         canvas.drawBitmap(mBitmap, bmpR, canvasR, null);
     }
@@ -147,9 +176,9 @@ public class EditPicture extends View {
         mPaint.setColor(color);
         mPaint.setAlpha(alpha);
         canvas.drawRect(0, 0, width, topLift.y - paintWidth, mPaint); // 上
-        canvas.drawRect(topRight.x + paintWidth, topRight.y, width, height, mPaint);// 右
-        canvas.drawRect(0, downLift.y + paintWidth, downRight.x, height, mPaint); //下
-        canvas.drawRect(0, topLift.y, topLift.x - paintWidth, downLift.y, mPaint); // 左
+        canvas.drawRect(topRight.x + paintWidth * 2, topRight.y, width, height, mPaint);// 右
+        canvas.drawRect(0, downLift.y + paintWidth, downRight.x + paintWidth, height, mPaint); //下
+        canvas.drawRect(0, topLift.y, topLift.x, downLift.y, mPaint); // 左
         // 三角形
         mPaint.setColor(colorPaint);
         mPaint.setStrokeWidth(hornPaintWidth);
@@ -201,72 +230,111 @@ public class EditPicture extends View {
     }
 
     /**
-     * 拖动矩形框
+     * 改变矩形框的大小
      *
      * @param distanceX
      * @param distanceY
      */
     private void changeHour(int distanceX, int distanceY) {
-//        float minInterval = hornLength * 3;
+        float minInterval = hornLength * 3;
         switch (mDownPosition) {
             case TOPLIFT:   //
-//                if (Math.abs(topLift.x - topRight.x) <= minInterval && distanceX > 0) {
-//                    distanceX = 0;
-//                }
-//                if (Math.abs(topLift.y - downLift.y) <= minInterval && distanceY > 0) {
-//                    distanceY = 0;
-//                }
                 topLift.offset(distanceX, distanceY);
                 topRight.offset(0, distanceY);
                 downLift.offset(distanceX, 0);
+                if (Math.abs(topLift.x - topRight.x) <= minInterval && distanceX >= 0) {
+                    topLift.x = (int) (topRight.x - minInterval);
+                    downLift.x = (int) (topRight.x - minInterval);
+                }
+                if (Math.abs(topLift.y - downLift.y) <= minInterval && distanceY >= 0) {
+                    topRight.y = (int) (downLift.y - minInterval);
+                    topLift.y = (int) (downLift.y - minInterval);
+                }
                 break;
             case TOPRIGHT:
                 topRight.offset(distanceX, distanceY);
                 topLift.offset(0, distanceY);
                 downRight.offset(distanceX, 0);
+                if (Math.abs(topLift.x - topRight.x) <= minInterval && distanceX <= 0) {
+                    topRight.x = (int) (topLift.x + minInterval);
+                    downRight.x = (int) (topLift.x + minInterval);
+                }
+                if (Math.abs(downRight.y - topRight.y) <= minInterval && distanceY >= 0) {
+                    topRight.y = (int) (downRight.y - minInterval);
+                    topLift.y = (int) (downRight.y - minInterval);
+                }
                 break;
             case DOWNLIFT:
                 downLift.offset(distanceX, distanceY);
                 topLift.offset(distanceX, 0);
                 downRight.offset(0, distanceY);
+                if (Math.abs(downLift.x - downRight.x) <= minInterval && distanceX >= 0) {
+                    downLift.x = (int) (downRight.x - minInterval);
+                    topLift.x = (int) (downRight.x - minInterval);
+                }
+                if (Math.abs(topLift.y - downLift.y) <= minInterval && distanceY <= 0) {
+                    downLift.y = (int) (topLift.y + minInterval);
+                    downRight.y = (int) (topLift.y + minInterval);
+                }
                 break;
             case DOWNRIGHT:
                 downRight.offset(distanceX, distanceY);
                 topRight.offset(distanceX, 0);
                 downLift.offset(0, distanceY);
+                if (Math.abs(downLift.x - downRight.x) <= minInterval && distanceX <= 0) {
+                    downRight.x = (int) (downLift.x + minInterval);
+                    topRight.x = (int) (downLift.x + minInterval);
+                }
+                if (Math.abs(topRight.y - downRight.y) <= minInterval && distanceY <= 0) {
+                    downRight.y = (int) (topRight.y + minInterval);
+                    downLift.y = (int) (topRight.y + minInterval);
+                }
                 break;
         }
         invalidate();
     }
 
 
+    /**
+     * 抬手之后修改框的大小
+     */
     private void downUp() {
-//        int upW = topRight.x - topLift.x;
-//        int upH = downLift.x - topLift.y;
-//
-//        float changeHeight;
-//        float changeWidth;
-//        float deviation;    // View 的宽与缩放之后的bitmap的宽的一般,或者高
-//        changeHeight = height - spacing * 2;
-//        changeWidth = width - spacing * 2;
-//        if (changeWidth / width > changeHeight / height) {
-//            changeWidth = changeHeight / upH * upW;
-//            deviation = (width - changeWidth) / 2;
-//        } else {
-//            changeHeight = changeWidth / upW * upH;
-//            deviation = (height - changeHeight) / 2;
-//        }
-//        topLift.set(spacing, (int) (spacing + deviation));
-//        topRight.set((int) (changeWidth + spacing), (int) (spacing + deviation));
-//        downLift.set(spacing, (int) (changeHeight + deviation));
-//        downRight.set((int) (changeWidth + spacing), (int) (changeHeight + deviation));
-        invalidate();
+        if (mDownPosition == DownPosition.NONE || mDownPosition == DownPosition.CENTER) {
+            return;
+        }
+        int upW = Math.abs(topRight.x - topLift.x);
+        int upH = Math.abs(downLift.y - topLift.y);
+
+        float changeHeight;
+        float changeWidth;
+        float deviationX = spacing, deviationY = spacing;    // View 的宽与缩放之后的bitmap的宽的一般,或者高
+        changeHeight = height - deviationY * 2;
+        changeWidth = width - deviationX * 2;
+        if (changeWidth / upW > changeHeight / upH) {
+            changeWidth = changeHeight / upH * upW;
+            deviationX = (width - changeWidth) / 2;
+        } else {
+            changeHeight = changeWidth / upW * upH;
+            deviationY = (height - changeHeight) / 2;
+        }
+        topLift.set((int) deviationX, (int) deviationY);
+        topRight.set((int) (changeWidth + deviationX), (int) deviationY);
+        downLift.set((int) deviationX, (int) (changeHeight + deviationY));
+        downRight.set((int) (changeWidth + deviationX), (int) (changeHeight + deviationY));
+    }
+
+
+    private static Bitmap bitChangeSize(Bitmap bitmap, float xScale, float yScale) {
+        Matrix matrix = new Matrix();
+        matrix.postScale(xScale, yScale); //长和宽放大缩小的比例
+        Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        bitmap.recycle();
+        return resizeBmp;
     }
 
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.e(TAG, "Action>>>" + event.getAction());
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 downX = event.getX();
@@ -281,10 +349,10 @@ public class EditPicture extends View {
                 downY = event.getY();
                 return true;
             case MotionEvent.ACTION_UP:
-                mDownPosition = DownPosition.NONE;
                 downUp();
-
-                break;
+                mDownPosition = DownPosition.NONE;
+                invalidate();
+                return true;
         }
         return super.onTouchEvent(event);
     }

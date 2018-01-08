@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
     android:gravity="center"
     android:orientation="vertical"
     tools:context="com.example.wangzeqiu.mytimeview.activitys.EditPictureActivity">
 
 
-    <com.example.wangzeqiu.mytimeview.views.EditPicture
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <com.example.wangzeqiu.mytimeview.views.editpicture.EditPictureLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

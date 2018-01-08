@@ -28,7 +28,9 @@
         <activity android:name=".activitys.ShowImgActivity" />
         <activity android:name=".showimg.PictureActivity" />
         <activity android:name=".activitys.PermissionActivity" />
-        <activity android:name=".activitys.EditPictureActivity"></activity>
+        <activity
+            android:name=".activitys.EditPictureActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
