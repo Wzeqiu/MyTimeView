@@ -51,14 +51,16 @@ public class EditPicture extends View {
     private int area = 30;  //四个角触摸区域反馈大小
 
     private float degrees = 0;
-
-
     private boolean isReset = true;
     private DownPosition mDownPosition = DownPosition.NONE;
 
-
     private float downX;
     private float downY;
+
+
+    private float distanceX, distanceY;// 放大缩小前的距离
+    private float scale = 1; //缩放比例
+    private float scaleMultiple = 1;
 
     public boolean isReset() {
         return isReset;
@@ -66,6 +68,8 @@ public class EditPicture extends View {
 
     public void setReset(boolean reset) {
         isReset = reset;
+        scaleMultiple = 1;
+        scale = 1;
         invalidate();
     }
 
@@ -108,6 +112,7 @@ public class EditPicture extends View {
         InputStream is = getResources().openRawResource(R.drawable.picture2);
         BitmapDrawable bmpDraw = new BitmapDrawable(is);
         mBitmap = bmpDraw.getBitmap();
+        mBitmap = Bitmap.createBitmap(mBitmap);
         bmpW = mBitmap.getWidth();
         bmpH = mBitmap.getHeight();
     }
@@ -115,17 +120,21 @@ public class EditPicture extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 //        canvas.rotate(90, width / 2, height / 2);
+
         restart(canvas);
 
     }
 
 
     private void restart(Canvas canvas) {
-//        if (isReset) {
-//            isReset = false;
+        if (mDownPosition == DownPosition.CENTER || mDownPosition == DownPosition.NONE) {
+            scaleMultiple = scale * scaleMultiple;
+            canvas.scale(scale, scale, width / 2, height / 2);
+        }
         drawBitmap(canvas);
-//        } else {
-//        }
+        if (mDownPosition == DownPosition.CENTER || mDownPosition == DownPosition.NONE) {
+            canvas.scale(1 / scaleMultiple, 1 / scaleMultiple, width / 2, height / 2);
+        }
         drawFrame(canvas);
     }
 
@@ -146,12 +155,15 @@ public class EditPicture extends View {
             deviationY = (height - changeHeight) / 2;
             canvasR = new Rect((int) deviationX, (int) deviationY, (int) (changeWidth + deviationX), (int) (changeHeight + deviationY));
         }
+
         if (isReset) {
             isReset = false;
             topLift.set((int) deviationX, (int) deviationY);
             topRight.set((int) (changeWidth + deviationX), (int) deviationY);
             downLift.set((int) deviationX, (int) (changeHeight + deviationY));
             downRight.set((int) (changeWidth + deviationX), (int) (changeHeight + deviationY));
+            distanceX = Math.abs(topRight.x - topLift.x);
+            distanceY = Math.abs(downLift.y - topLift.y);
         }
         canvas.drawBitmap(mBitmap, bmpR, canvasR, null);
     }
@@ -225,6 +237,7 @@ public class EditPicture extends View {
             }
         } else {
             mDownPosition = DownPosition.CENTER;
+            return;
         }
         invalidate();
     }
@@ -290,6 +303,8 @@ public class EditPicture extends View {
                     downLift.y = (int) (topRight.y + minInterval);
                 }
                 break;
+            default:
+                return;
         }
         invalidate();
     }
@@ -317,19 +332,13 @@ public class EditPicture extends View {
             changeHeight = changeWidth / upW * upH;
             deviationY = (height - changeHeight) / 2;
         }
+        scale = Math.min(upW / distanceX, upH / distanceY);
         topLift.set((int) deviationX, (int) deviationY);
         topRight.set((int) (changeWidth + deviationX), (int) deviationY);
         downLift.set((int) deviationX, (int) (changeHeight + deviationY));
         downRight.set((int) (changeWidth + deviationX), (int) (changeHeight + deviationY));
-    }
-
-
-    private static Bitmap bitChangeSize(Bitmap bitmap, float xScale, float yScale) {
-        Matrix matrix = new Matrix();
-        matrix.postScale(xScale, yScale); //长和宽放大缩小的比例
-        Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        bitmap.recycle();
-        return resizeBmp;
+        distanceX = Math.abs(topRight.x - topLift.x);
+        distanceY = Math.abs(downLift.y - topLift.y);
     }
 
 
@@ -339,6 +348,8 @@ public class EditPicture extends View {
             case MotionEvent.ACTION_DOWN:
                 downX = event.getX();
                 downY = event.getY();
+                Log.e(TAG, "downX>>>>" + downX);
+                Log.e(TAG, "downY>>>>" + downY);
                 downHorn(downX, downY);
                 return true;
             case MotionEvent.ACTION_MOVE:
