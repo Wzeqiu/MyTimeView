@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button7).setOnClickListener(this);
         findViewById(R.id.get_permission).setOnClickListener(this);
         findViewById(R.id.edit_picture).setOnClickListener(this);
-aaaa
-
         //test1
         //test2
         //test2
