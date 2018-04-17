@@ -3,14 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_bright"
     android:gravity="center"
     android:orientation="vertical"
     tools:context="com.example.wangzeqiu.mytimeview.activitys.EditPictureActivity">
+<Button
+    android:id="@+id/button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/picture1" />
 
-
-    <com.example.wangzeqiu.mytimeview.views.editpicture.EditPictureLinearLayout
+    <TextView
+        android:id="@+id/views"
+        android:layout_marginBottom="-100dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="100dp" />
 </LinearLayout>
