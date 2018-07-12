@@ -30,7 +30,8 @@
         <activity android:name=".activitys.PermissionActivity" />
         <activity
             android:name=".activitys.EditPictureActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".activitys.ProportionActivity"></activity>
     </application>
 
 </manifest>

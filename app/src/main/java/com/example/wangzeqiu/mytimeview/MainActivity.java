@@ -10,6 +10,7 @@ import com.example.wangzeqiu.mytimeview.activitys.CakeActivity;
 import com.example.wangzeqiu.mytimeview.activitys.EditPictureActivity;
 import com.example.wangzeqiu.mytimeview.activitys.LoadViewActivity;
 import com.example.wangzeqiu.mytimeview.activitys.PermissionActivity;
+import com.example.wangzeqiu.mytimeview.activitys.ProportionActivity;
 import com.example.wangzeqiu.mytimeview.activitys.RadarActivity;
 import com.example.wangzeqiu.mytimeview.activitys.ShowImgActivity;
 import com.example.wangzeqiu.mytimeview.activitys.SwitchActivity;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.get_permission).setOnClickListener(this);
         findViewById(R.id.edit_picture).setOnClickListener(this);
         findViewById(R.id.up_power).setOnClickListener(this);
+        findViewById(R.id.proportion).setOnClickListener(this);
         //test1
         //test2
         //test2
@@ -66,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.edit_picture:
                 startActivity(new Intent(this, EditPictureActivity.class));
+                break;
+            case R.id.proportion:
+                startActivity(new Intent(this, ProportionActivity.class));
                 break;
         }
 
