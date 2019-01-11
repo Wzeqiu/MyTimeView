@@ -22,6 +22,11 @@
         android:text="垂直跑马灯" />
 
     <Button
+        android:id="@+id/horizontal_rolling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="横向滚动" />
+    <Button
         android:id="@+id/button3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

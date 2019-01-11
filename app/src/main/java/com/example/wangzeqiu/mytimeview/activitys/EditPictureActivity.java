@@ -30,7 +30,12 @@ public class EditPictureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_picture);
 
         views = (TextView) findViewById(R.id.views);
-        findViewById(R.id.button).setOnClickListener((View view) -> test());
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                test();
+            }
+        });
 
     }
 
@@ -38,12 +43,15 @@ public class EditPictureActivity extends AppCompatActivity {
         ValueAnimator animator = ValueAnimator.ofInt(((LinearLayout.LayoutParams) views.getLayoutParams()).bottomMargin, 0);
         animator.setDuration(800);
         animator.setInterpolator(new DecelerateInterpolator());
-        animator.addUpdateListener((ValueAnimator animation) -> {
-            int value = (int) animation.getAnimatedValue();
-            Log.e("EditPictureActivity", "value>>>>>>" + value);
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) views.getLayoutParams();
-            params.setMargins(0, 0, 0, value);
-            views.setLayoutParams(params);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                Log.e("EditPictureActivity", "value>>>>>>" + value);
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) views.getLayoutParams();
+                params.setMargins(0, 0, 0, value);
+                views.setLayoutParams(params);
+            }
         });
         animator.start();
     }

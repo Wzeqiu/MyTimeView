@@ -1,13 +1,18 @@
 package com.example.wangzeqiu.mytimeview;
 
 import android.content.Intent;
+import android.graphics.Camera;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.example.wangzeqiu.mytimeview.activitys.CakeActivity;
 import com.example.wangzeqiu.mytimeview.activitys.EditPictureActivity;
+import com.example.wangzeqiu.mytimeview.activitys.HorizontalRollingViewActivity;
 import com.example.wangzeqiu.mytimeview.activitys.LoadViewActivity;
 import com.example.wangzeqiu.mytimeview.activitys.PermissionActivity;
 import com.example.wangzeqiu.mytimeview.activitys.ProportionActivity;
@@ -19,6 +24,7 @@ import com.example.wangzeqiu.mytimeview.activitys.VerticalMarqueeActivity;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    ListView  mListView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.edit_picture).setOnClickListener(this);
         findViewById(R.id.up_power).setOnClickListener(this);
         findViewById(R.id.proportion).setOnClickListener(this);
+        findViewById(R.id.horizontal_rolling).setOnClickListener(this);
         //test1
         //test2
         //test2
@@ -71,6 +78,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.proportion:
                 startActivity(new Intent(this, ProportionActivity.class));
+                break;
+            case R.id.horizontal_rolling:
+                startActivity(new Intent(this, HorizontalRollingViewActivity.class));
                 break;
         }
 

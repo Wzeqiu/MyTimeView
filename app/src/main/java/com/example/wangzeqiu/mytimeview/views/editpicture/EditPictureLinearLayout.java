@@ -95,7 +95,12 @@ public class EditPictureLinearLayout extends FrameLayout {
             mTvOperate.setGravity(Gravity.CENTER);
             mTvOperate.setText(mOperates.get(i).getData());
             mTvOperate.setTag(mOperates.get(i).getType());
-            mTvOperate.setOnClickListener(this::showEdit);
+            mTvOperate.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showEdit(v);
+                }
+            });
             layout.addView(mTvOperate, linOperateParams);
         }
     }

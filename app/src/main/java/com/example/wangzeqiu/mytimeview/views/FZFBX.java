@@ -31,7 +31,6 @@ public class FZFBX extends View {
 
     private Paint mPaint;                   //中间圆
     private Paint mPaint1;                  //波纹
-    private Bitmap mCenterBitmap;
     private Bitmap mCircleImageBitmap;
 
     private int centerBitmapHeight;         //中间图片的高度

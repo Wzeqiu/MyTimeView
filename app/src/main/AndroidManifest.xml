@@ -31,7 +31,8 @@
         <activity
             android:name=".activitys.EditPictureActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activitys.ProportionActivity"></activity>
+        <activity android:name=".activitys.ProportionActivity" />
+        <activity android:name=".activitys.HorizontalRollingViewActivity"></activity>
     </application>
 
 </manifest>
