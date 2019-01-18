@@ -21,7 +21,7 @@ import java.util.List;
 public class HorizontalRollingView extends LinearLayout {
     private int SHOW_NUMBER = 6;
     private int durationTime = 1000;
-    private List<Integer> showDatas = new LinkedList<>();
+    private LinkedList<Integer> showDatas = new LinkedList<>();
 
     public HorizontalRollingView(Context context) {
         this(context, null);
@@ -94,7 +94,7 @@ public class HorizontalRollingView extends LinearLayout {
     }
 
     public void add() {
-        showDatas.add(0, R.drawable.checkmark);
+        showDatas.addFirst(R.drawable.checkmark);
     }
 
     @Override
