@@ -15,12 +15,13 @@ import android.widget.LinearLayout;
 import com.example.wangzeqiu.mytimeview.R;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class HorizontalRollingView extends LinearLayout {
     private int SHOW_NUMBER = 6;
     private int durationTime = 1000;
-    private List<Integer> showDatas = new ArrayList<>();
+    private List<Integer> showDatas = new LinkedList<>();
 
     public HorizontalRollingView(Context context) {
         this(context, null);
@@ -84,8 +85,8 @@ public class HorizontalRollingView extends LinearLayout {
 
                 int data = showDatas.remove(0);
                 showDatas.add(data);
-
                 view.setImageResource(data);
+
                 addView(view);
             }
         });
